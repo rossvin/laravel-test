@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	@if (  isset( $page->meta_title ) )<title>{{{ $page->meta_title }}} @if( isset( $site_offline ) && $site_offline == 1 )OFFLINE @endif</title>@endif
+	@if (  isset( $page->meta_keywords ) )<meta name="keywords" content="{{{ $page->meta_keywords }}}">@endif
+	@if (  isset( $page->meta_description )  )<meta name="description" content="{{{ $page->meta_description }}}">@endif
+
+	<link rel="stylesheet" href="/frontend/css/app.min.css">
+	<link rel="stylesheet" href="/public/favicon.ico">
+
+<!-- 	<link rel="stylesheet" href="/frontend/css/reset.css">
+	<link href="/frontend/css/jquery.bxslider.css" rel="stylesheet">
+	<link type="text/css" href="/frontend/css/jscrollpane.css" rel="stylesheet">
+	<link type="text/css" href="/frontend/css/jquery.datetimepicker.css" rel="stylesheet">
+	<link href="/frontend/css/style.css" type="text/css" rel="stylesheet"> -->
+	
+	@section('styles')
+	@show
+
+	<!--[if lt IE 9]>
+		<script src="/frontend/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+<!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter36382700 = new Ya.Metrika({ id:36382700, clickmap:true, trackLinks:true, accurateTrackBounce:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/36382700" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<div class="global_wr">
+
+	<a id="ask_question" href="/ask">Задать вопрос</a>
+	<a href="#moveup" class="to_top"></a>
+
+	<nav>
+		<div class="wrapper">
+			{!! HTML::pages( $main_pages_tree ) !!}
+		</div>
+	</nav>
+	<!-- nav end -->
+
+	<header>
+		<div class="wrapper clearfix">
+
+			<a href="/" class="logo fleft" id="moveup">
+				<img src="/frontend/img/logo.png" alt="logo">
+				<span>
+					<img src="/frontend/img/rotated.png" alt="rotated">
+				</span>
+			</a>
+			<div class="fleft">
+
+				<div class="clearfix right_top">
+					<div class="slogan fleft">{{ $settings[12]->value }}</div>
+					<div class="fleft phones">
+						<p>{{ $settings[2]->value }}</p>
+						<p>{{ $settings[3]->value }}</p>
+						<p class="worktime">{{ $settings[1]->value }}</p>
+					</div>
+					<div class="fright cart">
+						<a class="fleft" href="/cart">
+							<img src="/frontend/img/icons/cart.png" alt="cart">
+						</a>
+						<div class="c_info">
+							<p>Корзина</p>
+							<span class="cart_quant">{{ $count_in_cart }} {{ Lang::choice('товар|товара|товаров', $count_in_cart , array(), 'ru') }}</span>
+							<span class="cart_pr">{{ $total_price }} грн</span>
+						</div>
+					</div>
+				</div>
+				<!-- header right top section end -->
+
+				<div class="clearfix">
+					<div class="search_form fleft">
+						<form method="POST" action="/search">
+							{!! csrf_field() !!}
+							<input type="text" required name="search" placeholder="Поиск">
+							<input type="image" src="/frontend/img/icons/len.png" alt="search">
+						</form>
+					</div>
+					<!-- search form end -->
+					<div class="fright networks">
+						<span>Мы в социальных сетях:</span>
+						<a href="{{ $settings[7]->value }}" target="_blank"><img src="/frontend/img/icons/vk.png" alt="vk"></a>
+						<a href="{{ $settings[8]->value }}" target="_blank"><img src="/frontend/img/icons/fb.png" alt="fb"></a>
+						<a href="{{ $settings[9]->value }}" target="_blank"><img src="/frontend/img/icons/google.png" alt="google"></a>
+						<a href="{{ $settings[10]->value }}" target="_blank"><img src="/frontend/img/icons/ok.png" alt="ok"></a>
+					</div>
+				</div>
+				<!-- header right bottom section end -->
+
+			</div>
+
+		</div>
+	</header>
+	<!-- header end -->
+
+	<menu>
+		<div class="wrapper">
+			<ul>
+				@foreach( $categories as $cat )
+					<li><a href="/categories/{{ $cat->slug }}">{{ $cat->name }}</a></li>
+				@endforeach
+			</ul>
+		</div>
+	</menu>
+	<!-- menu end  -->
