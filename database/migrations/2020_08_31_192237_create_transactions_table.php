@@ -15,7 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->char('name', 30);
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('wallet_id');
+            $table->foreign('wallet_id')->references('id')->on('wallets');
+            $table->integer('deposit_id')->nullable();
+            $table->foreign('deposit_id')->references('id')->on('deposits');
+            $table->double('amount', 15, 4)->default(0);
+            $table->timestamp('created_at');
         });
     }
 
@@ -29,3 +37,4 @@ class CreateTransactionsTable extends Migration
         Schema::dropIfExists('transactions');
     }
 }
+

@@ -15,7 +15,16 @@ class CreateDepositsTable extends Migration
     {
         Schema::create('deposits', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('wallet_id');
+            $table->foreign('wallet_id')->references('id')->on('wallets');
+            $table->double('invested', 15, 4)->default(0);
+            $table->double('percent', 15, 4)->default(0);
+            $table->smallInteger('active')->default(0);
+            $table->smallInteger('duration')->default(0);
+            $table->smallInteger('accrue_times')->default(0);
+            $table->timestamp('created_at');
         });
     }
 
@@ -29,3 +38,6 @@ class CreateDepositsTable extends Migration
         Schema::dropIfExists('deposits');
     }
 }
+
+
+

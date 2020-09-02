@@ -15,7 +15,11 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->double('balance', 15, 4)->default(0);
+            $table->timestamp('created_at');
+
         });
     }
 
