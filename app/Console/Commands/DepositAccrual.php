@@ -45,7 +45,9 @@ class DepositAccrual extends Command
         foreach($deposits as $deposit){
 
             $deposit->duration = $deposit->invested * ($deposit->percent / 100);
-            if($deposit-> accrue_times == 10)$deposit-> active =0;
+            $deposits->save();
+            $this->createTransaction('accrue',$deposit->user_id,$deposit->wallet_id,$deposit->id,$deposit->duration);
+            if($deposit-> accrue_times == 10)$deposit-> active =0; $this->createTransaction('close_deposit',$deposit->user_id,$deposit->wallet_id,$deposit->id,$deposit->duration);
 
 
         }
